@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Publisher, Book
+from .models import Publisher, Book, Author
 
 
 # Create your views here.
@@ -80,3 +80,8 @@ def book_del(request):
     pk = request.GET.get('pk')
     Book.objects.get(pk=pk).delete()
     return redirect('/book_list')
+
+
+def author_list(request):
+    authors = Author.objects.all()
+    return render(request, 'author_list.html', {'authors':authors})

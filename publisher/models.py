@@ -10,3 +10,8 @@ class Publisher(models.Model):
 class Book(models.Model):
     name = models.CharField(max_length=32)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=32)
+    books = models.ManyToManyField('Book')

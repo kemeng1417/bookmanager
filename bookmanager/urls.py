@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^book_edit/', views.book_edit),
     url(r'^book_del/', views.book_del),
 
+    url(r'^author_list/', views.author_list),
+
 ]
