@@ -79,9 +79,49 @@ def book_edit(request):
 def book_del(request):
     pk = request.GET.get('pk')
     Book.objects.get(pk=pk).delete()
-    return redirect('/book_list')
+    return redirect('/book_list/')
 
 
 def author_list(request):
+    books = Book.objects.all()
     authors = Author.objects.all()
-    return render(request, 'author_list.html', {'authors':authors})
+    return render(request, 'author_list.html', {'authors':authors, 'books':books})
+
+
+def author_add(request):
+    books = Book.objects.all()
+    if request.method == 'POST':
+        author_name = request.POST.get('author_name')
+        book_ids = request.POST.getlist('book_ids')
+        authors = Author.objects.all()
+        if not author_name:
+            errmsg = '作者名不能为空'
+            return render(request, 'author_add.html', {'errmsg':errmsg, 'books':books})
+        if  Author.objects.filter(name=author_name):
+            errmsg = '作者已存在'
+            return render(request, 'author_add.html', {'errmsg':errmsg, 'books':books})
+        author_obj = Author.objects.create(name=author_name)
+        author_obj.books.set(book_ids)
+        return redirect('/author_list/')
+    return render(request, 'author_add.html', {'books':books})
+
+
+
+def author_del(request):
+    pk = request.GET.get('pk')
+    Author.objects.filter(pk=pk).delete()
+    return redirect('/author_list/')
+
+
+def author_edit(request):
+    pk = request.GET.get('pk')
+
+    author = Author.objects.get(pk=pk)
+    books = Book.objects.all()
+    if request.method == 'POST':
+        author_name = request.POST.get('author_name')
+        book_ids = request.POST.getlist('book_ids')
+        author.name = author_name
+        author.books.set(book_ids)
+        return redirect('/author_list/')
+    return render(request, 'author_edit.html', {'author':author, 'books':books})
