@@ -1,3 +1,11 @@
 {
-    "python.pythonPath": "D:/py_virtual_env/bookmanager/Scripts/python.exe"
+    "python.pythonPath": "D:/py_virtual_env/bookmanager/Scripts/python.exe",
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-txt",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "emmet.includeLanguages": {"django-html": "html"},
+
 }
